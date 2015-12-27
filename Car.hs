@@ -3,6 +3,7 @@ module Car where
 import Graphics.Gloss.Data.Vector
 import Graphics.Gloss
 import Graphics.Gloss.Data.ViewPort
+import Graphics.Gloss.Data.Color
 import Data.Maybe
 import Line
 
@@ -21,8 +22,9 @@ data Car = Car {
   speed :: Float,
   carWidth :: Float,
   carHeight :: Float,
-  carPath :: [(Float, Float)]
-}
+  carPath :: [(Float, Float)],
+  carColor :: Color
+} deriving (Show)
 
 drawCar :: Car -> Picture
 drawCar car = pictures [car', path]
@@ -96,16 +98,16 @@ moveCar seconds car = --if checkCol car (carPath car) then
     (x,y) = position car
     (vx, vy) = direcction car
     v = speed car
-    x' = x + vx * v * seconds
-    y' = y + vy * v * seconds
+    x' = x + vx * v * seconds 
+    y' = y + vy * v * seconds 
 
 
-updatePath :: (Float, Float) -> [(Float, Float)] -> [(Float, Float)] 
-updatePath (x1, y1) [] = [(x1,y1)] 
-updatePath (x1, y1) [x] = (x1, y1) : [x] 
-updatePath (x1, y1) (x:xs) = if x1 /= (fst x) && (y1 /= (snd x)) 
-then ((x1,y1) : (x:xs)) 
-else (x1, y1) : xs
+updatePath :: (Float, Float) -> [(Float, Float)] -> [(Float, Float)]
+updatePath (x1, y1) [] = [(x1,y1)]
+updatePath (x1, y1) [x] = (x1, y1) : [x]
+updatePath (x1, y1) (x:xs) = if x1 /= (fst x) && (y1 /= (snd x))
+                              then ((x1,y1) : (x:xs))
+                              else (x1, y1) : xs
 
 inRange :: (Float, Float) -> (Float, Float) -> (Float,Float) -> Bool
 inRange (x1, y1) (x2, y2) (x, y) = x <= x2 && x >= x1 && y <= y2 && y >= y1
@@ -129,14 +131,3 @@ checkCollision l1 l2 p1 p2 = isJust p' &&
     where
       p' = intersect l1 l2
 
-
-
-
-initCar :: Car
-initCar = Car { carWidth = 2,
-  carHeight = 2,
-  position = (-40,40),
-  direcction = (1,0),
-  speed = 100,
-  carPath = []
-}
