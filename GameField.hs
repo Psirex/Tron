@@ -63,6 +63,8 @@ handleKeys (EventKey (SpecialKey KeyLeft) _ _ _) (GameField car1 car2) =
   if direcction car2 /= (1 , 0) then
   	newCar2 (car2 {carPath = (position car2) : (carPath car2) , direcction = (-1, 0)}) (GameField car1 car2)
   else (GameField car1 car2)
+ --рестарт
+handleKeys (EventKey (Char 'r') _ _ _) _ = initField
  
 handleKeys _ gf = gf
 
