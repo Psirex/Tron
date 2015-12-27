@@ -8,7 +8,9 @@ import Data.Maybe
 import Line
 
 data Car = Car {
+  start_position :: (Float, Float),
   position :: (Float, Float),
+  start_dir :: (Float, Float),
   direcction :: (Float, Float),
   speed :: Float,
   carWidth :: Float,
@@ -59,7 +61,7 @@ leftTopPoint car = (x', y')
 
 moveCar :: Float -> Car -> Car -> Car
 moveCar seconds car enemy = if checkCol car (carPath car) || checkCol car (carPath enemy) then
-  car {carPath = [(0,0)], position = (0, 0), direcction = (1, 0)}
+  car {carPath = [(start_position car)], position = (start_position car), direcction = (start_dir car)}
   else car {carPath = updatePath (dx, dy) (carPath car), position = (x', y')}
   where
     (x,y) = position car
