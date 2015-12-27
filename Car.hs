@@ -5,7 +5,6 @@ import Graphics.Gloss
 import Graphics.Gloss.Data.ViewPort
 import Graphics.Gloss.Geometry.Line
 import Data.Maybe
-import Line
 
 data Car = Car {
   start_position :: (Float, Float),
@@ -59,8 +58,8 @@ leftTopPoint car = (x', y')
 
 
 
-moveCar :: Float -> Car -> Car -> Car
-moveCar seconds car enemy = if checkCol car (carPath car) || checkCol car (carPath enemy) then
+moveCar :: Float -> [(Float,Float)] -> Car -> Car -> Car
+moveCar seconds walls car enemy = if checkCol car (carPath car) || checkCol car (carPath enemy) || checkCol car walls then
   car {carPath = [(start_position car)], position = (start_position car), direcction = (start_dir car)}
   else car {carPath = updatePath (dx, dy) (carPath car), position = (x', y')}
   where
@@ -95,14 +94,10 @@ checkCarCollision car p1 p2 = checkCollision p1 p2 (rightTopPoint car) (rightBot
    checkCollision p1 p2 (rightBottomPoint car) (leftBottomPoint car) ||
    --checkCollision p1 p2 (leftBottomPoint car) (leftTopPoint car) ||
    checkCollision p1 p2 (leftTopPoint car) (rightTopPoint car)
-    where
-      l1 = fromPoint p1 p2
 
 checkCollision :: (Float, Float) -> (Float, Float) -> (Float, Float) -> (Float, Float) -> Bool
 checkCollision lp1 lp2 cp1 cp2 = isJust p'
     where
-      l1 = fromPoint lp1 lp2
-      l2 = fromPoint cp1 cp2
       p' = intersectSegSeg lp1 lp2 cp1 cp2
 
 -- initCar :: Car
