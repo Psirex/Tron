@@ -8,7 +8,7 @@ width , height , offset, fps :: Int
 width = 800
 height = 600
 offset = 100
-fps = 60
+fps = 150
 
 data PongGame = Game {
   ballLoc :: (Float, Float),

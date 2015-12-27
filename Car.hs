@@ -137,6 +137,6 @@ initCar = Car { carWidth = 2,
   carHeight = 2,
   position = (-40,40),
   direcction = (1,0),
-  speed = 200,
+  speed = 100,
   carPath = []
 }
