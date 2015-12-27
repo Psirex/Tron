@@ -27,7 +27,7 @@ data Car = Car {
 drawCar :: Car -> Picture
 drawCar car = pictures [car', path]
   where
-    car' = uncurry translate (position car) $ rotate (angleBtw (direcction car) (1,0)) $ color blue $ rectangleWire (carWidth car) (carHeight car)
+    car' = uncurry translate (position car) $ rotate (angleBtw (direcction car) (1,0)) $ color white $ rectangleWire (carWidth car) (carHeight car)
     path = color blue $ line $ carPath car
 
 angleBtw :: (Float, Float) -> (Float, Float) -> Float
@@ -133,10 +133,10 @@ checkCollision l1 l2 p1 p2 = isJust p' &&
 
 
 initCar :: Car
-initCar = Car { carWidth = 25,
-  carHeight = 13,
+initCar = Car { carWidth = 2,
+  carHeight = 2,
   position = (-40,40),
   direcction = (1,0),
-  speed = 100,
+  speed = 200,
   carPath = []
 }
