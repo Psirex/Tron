@@ -78,19 +78,19 @@ main = play window background fps initCar drawCar handleKeys update
 handleKeys :: Event -> Car -> Car
 handleKeys (EventKey (Char 'w') _ _ _) car =
   if direcction car /= (0 , -1) then
-    car {direcction = (0, 1)}
+    car {carPath = (position car) : (carPath car) , direcction = (0, 1)}
   else car
 handleKeys (EventKey (Char 's') _ _ _) car =
   if direcction car /= (0 , 1) then
-    car {direcction = (0, -1)}
+    car {carPath = (position car) : (carPath car), direcction = (0, -1)}
   else car
 handleKeys (EventKey (Char 'd') _ _ _) car =
   if direcction car /= (-1 , 0) then
-    car {direcction = (1, 0)}
+    car {carPath = (position car) : (carPath car), direcction = (1, 0)}
   else car
 handleKeys (EventKey (Char 'a') _ _ _) car =
   if direcction car /= (1 , 0) then
-    car {direcction = (-1, 0)}
+    car {carPath = (position car) : (carPath car), direcction = (-1, 0)}
   else car
 handleKeys _ car = car
 
