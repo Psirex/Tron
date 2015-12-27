@@ -18,11 +18,19 @@ fromPoint (x1, y1) (x2, y2) = Line {a = a',b = b',c = c'}
 
 intersectLocal :: (Float, Float) -> (Float, Float) -> (Float, Float) -> (Float, Float) -> Bool
 intersectLocal p1 p2 p3 p4 =
-  let p = intersect (fromPoint p1 p2) (fromPoint p3 p4) in
+  let p = intersect (fromPoint p1 p2) (fromPoint p3 p4)
+      x1 = min (fst p1) (fst p2)
+      y1 = min (snd p1) (snd p2)
+      x2 = max (fst p1) (fst p2)
+      y2 = max (snd p1) (snd p2)
+      x3 = min (fst p3) (fst p4)
+      y3 = min (snd p3) (snd p4)
+      x4 = max (fst p3) (fst p4)
+      y4 = max (snd p3) (snd p4) in
     case p of
       Nothing -> False
-      Just(x, y) -> if x >= fst p1 && y >= snd p1 && x <= fst p2 && y <= snd p2 &&
-        x >= fst p3 && y >= snd p3 && x <= fst p4 && y <= snd p4 then True
+      Just(x, y) -> if x >= x1 && y >= y1 && x <= x2 && y <= y2 &&
+        x >= x3 && y >= y3 && x <= x4 && y <= y4 then True
         else False
 
 equivalent :: Line -> Line -> Bool
