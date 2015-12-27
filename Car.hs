@@ -88,9 +88,10 @@ leftSide :: Car -> Line
 leftSide car = fromPoint (leftTopPoint car) (rightTopPoint car)
 
 moveCar :: Float -> Car -> Car
-moveCar seconds car = if checkCol car (carPath car) then
-  car {carPath = (updatePath (x', y') (carPath car)), position = (0, 0)}
-  else car {carPath = (updatePath (x' - (carWidth car), y') (carPath car)), position = (x', y')}
+moveCar seconds car = --if checkCol car (carPath car) then
+  --car {carPath = (updatePath (x', y') (carPath car)), position = (0, 0)}
+  --else 
+    car {carPath = (updatePath (x' - (carWidth car), y') (carPath car)), position = (x', y')}
   where
     (x,y) = position car
     (vx, vy) = direcction car
@@ -99,10 +100,12 @@ moveCar seconds car = if checkCol car (carPath car) then
     y' = y + vy * v * seconds
 
 
-updatePath :: (Float, Float) -> [(Float, Float)] -> [(Float, Float)]
-updatePath (x1, y1) [] = [(x1,y1)]
-updatePath (x1, y1) [x] = (x1, y1) : [x]
-updatePath (x1, y1) (x:xs) = ((x1,y1) : xs)
+updatePath :: (Float, Float) -> [(Float, Float)] -> [(Float, Float)] 
+updatePath (x1, y1) [] = [(x1,y1)] 
+updatePath (x1, y1) [x] = (x1, y1) : [x] 
+updatePath (x1, y1) (x:xs) = if x1 /= (fst x) && (y1 /= (snd x)) 
+then ((x1,y1) : (x:xs)) 
+else (x1, y1) : xs
 
 inRange :: (Float, Float) -> (Float, Float) -> (Float,Float) -> Bool
 inRange (x1, y1) (x2, y2) (x, y) = x <= x2 && x >= x1 && y <= y2 && y >= y1
