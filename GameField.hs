@@ -20,12 +20,10 @@ newCar2 :: Car -> GameField -> GameField
 newCar2 car2 (GameField car1 _ w) = GameField car1 car2 w
 
 drawField :: GameField -> Picture
-drawField (GameField car1 car2 walls) = pictures [car1', path1, car2', path2, walls']
+drawField (GameField car1 car2 walls) = pictures [car1', car2', walls']
   where
-    car1' = uncurry translate (position car1) $ rotate (angleBtw (direcction car1) (1,0)) $ color white $ rectangleWire (carWidth car1) (carHeight car1)
-    path1 = color (carColor car1) $ line $ carPath car1
-    car2' = uncurry translate (position car2) $ rotate (angleBtw (direcction car2) (1,0)) $ color white $ rectangleWire (carWidth car2) (carHeight car2)
-    path2 = color (carColor car2) $ line $ carPath car2
+    car1' = drawCar car1
+    car2' = drawCar car2
     walls' = color green $ line $ walls
 
 updateField :: Float -> GameField -> GameField

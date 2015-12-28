@@ -21,8 +21,8 @@ data Car = Car {
 drawCar :: Car -> Picture
 drawCar car = pictures [car', path]
   where
-    car' = uncurry translate (position car) $ rotate (angleBtw (direcction car) (1,0)) $ color blue $ rectangleWire (carWidth car) (carHeight car)
-    path = color blue $ line $ carPath car
+    car' = uncurry translate (position car) $ rotate (angleBtw (direcction car) (1,0)) $ color white $ rectangleWire (carWidth car) (carHeight car)
+    path = color (carColor car) $ line $ carPath car
 
 angleBtw :: (Float, Float) -> (Float, Float) -> Float
 angleBtw (x1, y1) (x2, y2) = phi
