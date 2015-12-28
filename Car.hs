@@ -5,6 +5,7 @@ import Graphics.Gloss
 import Graphics.Gloss.Data.ViewPort
 import Graphics.Gloss.Geometry.Line
 import Data.Maybe
+import Data.List
 
 data Car = Car {
   start_position :: (Float, Float),
@@ -83,11 +84,14 @@ updatePath (x1, y1) (x:y:xs)
     else (x1, y1):(x:y:xs)
   | otherwise = (x1, y1):(x:y:xs)
 
+
+checkCol' :: Car -> [((Float, Float), (Float, Float))] -> Bool
+checkCol' car = foldl' (\acc (p1, p2) -> acc || checkCarCollision car p1 p2) False
+
+
 checkCol :: Car -> [(Float, Float)] -> Bool
-checkCol car (x:xs) = checkCol' car x xs
-  where
-    checkCol' car x [] = False
-    checkCol' car x (y:xs) = checkCarCollision car x y || checkCol' car y xs
+checkCol car xs = checkCol' car (zip xs (tail xs))
+
 
 checkCarCollision :: Car -> (Float, Float) -> (Float, Float) -> Bool
 checkCarCollision car p1 p2 = checkCollision p1 p2 (rightTopPoint car) (rightBottomPoint car)  ||
